@@ -10,6 +10,8 @@ Vue.material.registerTheme('default', {
     background: 'white'
 });
 
+import './getUserMedia-polyfill';
+
 import App from './App'
 new Vue({
   el: '#app',
