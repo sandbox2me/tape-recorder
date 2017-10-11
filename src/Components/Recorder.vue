@@ -53,7 +53,7 @@
 <!--  -->
 <script>
 import {addTrack} from '../db.js';
-import {bus, dialogcancel, dialogsubmit, dialogupdate} from '../bus.js';
+import bus, { dbEvents } from '../bus.js';
 
 export default {
   components: {},
@@ -96,23 +96,23 @@ export default {
             const data = new Blob(chunks, {type: self.mediaRecorder.mimeType});
 
             // Pop the dialog to get the name
-            bus.$emit(dialogupdate, {name: 'saveTrack', timeStamp: e.timeStamp});
+            bus.$emit(dbEvents.dialogupdate, {name: 'saveTrack', timeStamp: e.timeStamp});
 
             // When the name is submitted
-            bus.$on(dialogsubmit, function({name, timeStamp}){
+            bus.$on(dbEvents.dialogsubmit, function({name, timeStamp}){
               if(e.timeStamp === timeStamp){
                 // Add track to the DB
                 addTrack({name, duration, data});
-                bus.$off(dialogsubmit);
-                bus.$off(dialogcancel);
+                bus.$off(dbEvents.dialogsubmit);
+                bus.$off(dbEvents.dialogcancel);
               }
             });
 
             // If the dialog box is cancelled
-            bus.$on(dialogcancel, function(timeStamp){
+            bus.$on(dbEvents.dialogcancel, function(timeStamp){
               if(e.timeStamp === timeStamp){
-                bus.$off(dialogsubmit);
-                bus.$off(dialogcancel);
+                bus.$off(dbEvents.dialogsubmit);
+                bus.$off(dbEvents.dialogcancel);
               }
             });
 

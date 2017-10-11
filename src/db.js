@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import {bus, dbupdate} from './bus.js';
+import bus, { dbEvents } from './bus.js';
 
 // Create the db if it doesn't exist and connect to it
 const db = new Dexie('Audio');
@@ -22,7 +22,7 @@ export function addTrack({name, duration, data, date}){
     date: new Date
   });
   add.then(function(){
-    bus.$emit(dbupdate);
+    bus.$emit(dbEvents.dbupdate);
   });
   return add;
 }
@@ -40,7 +40,7 @@ export function getTrack(id){
 export function removeTrack(id){
   var remove = db.tracks.delete(id);
   remove.then(function(){
-    bus.$emit(dbupdate);
+    bus.$emit(dbEvents.dbupdate);
   });
   return remove;
 }

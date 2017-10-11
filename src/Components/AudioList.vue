@@ -15,10 +15,7 @@ import {
   removeTrack
 } from '../db.js';
 
-import {
-  bus,
-  dbupdate
-} from '../bus.js';
+import bus, { dbEvents } from '../bus.js';
 
 import AudioListItem from './AudioListItem.vue';
 
@@ -28,7 +25,7 @@ export default {
   },
   computed: {},
   created(){
-    bus.$on(dbupdate, this.updateTracks);
+    bus.$on(dbEvents.dbupdate, this.updateTracks);
     this.updateTracks();
   },
   data(){

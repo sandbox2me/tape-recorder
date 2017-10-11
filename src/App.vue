@@ -43,14 +43,7 @@ import AudioList from './Components/AudioList.vue';
 import Recorder from './Components/Recorder.vue';
 import SideNav from './Components/SideNav.vue';
 
-import {
-  bus,
-  deletecancel,
-  dialogcancel,
-  dialogsubmit,
-  dialogupdate,
-  trackdelete
-} from './bus.js';
+import bus, { dbEvents } from './bus.js';
 
 export default {
   components: {
@@ -61,12 +54,12 @@ export default {
   computed: {},
   created(){
     const self = this;
-    bus.$on(dialogupdate, function(e){
+    bus.$on(dbEvents.dialogupdate, function(e){
       self.dialogTimeStamp = e.timeStamp;
       self.$refs[e.name].open();
     });
 
-    bus.$on(trackdelete, function(id){
+    bus.$on(dbEvents.trackdelete, function(id){
       self.deleteId = id;
       self.$refs.snackbar.open();
     });
@@ -80,7 +73,7 @@ export default {
   },
   methods: {
     deleteCancel(){
-      bus.$emit(deletecancel, this.deleteId);
+      bus.$emit(dbEvenst.deletecancel, this.deleteId);
       this.$refs.snackbar.close();
     },
     changePageReciever(){
@@ -89,9 +82,9 @@ export default {
     dialogClose(type){
       const self = this;
       if(type === 'ok')
-        bus.$emit(dialogsubmit, {name: self.dialogInput, timeStamp: self.dialogTimeStamp});
+        bus.$emit(dbEvents.dialogsubmit, {name: self.dialogInput, timeStamp: self.dialogTimeStamp});
       if(type === 'cancel')
-        bus.$emit(dialogcancel, self.dialogTimeStamp);
+        bus.$emit(dbEvents.dialogcancel, self.dialogTimeStamp);
 
       this.dialogInput = null;
       this.dialogTimeStamp = null;

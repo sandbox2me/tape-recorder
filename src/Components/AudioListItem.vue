@@ -57,12 +57,7 @@
 </template>
 <!--  -->
 <script>
-import {
-  bus,
-  deletecancel,
-  trackdelete,
-  trackupdate
-} from '../bus.js';
+import bus, { dbEvents } from '../bus.js';
 
 import {
   getTrack,
@@ -77,7 +72,7 @@ export default {
   created(){
     const self = this;
 
-    bus.$on(trackupdate, function(id){
+    bus.$on(dbEvents.trackupdate, function(id){
       if(self.track.id !== id) self.stopTrack();
     });
   },
@@ -119,12 +114,12 @@ export default {
     deleteTrack(id){
       const self = this;
 
-      bus.$emit(trackdelete, id);
+      bus.$emit(dbEvents.trackdelete, id);
       let timeout = setTimeout(function(){
         removeTrack(id);
       }, 5000);
 
-      bus.$on(deletecancel, function(deleteId){
+      bus.$on(dbEvents.deletecancel, function(deleteId){
         if(deleteId === id){
           clearTimeout(timeout);
           self.hidden = false;
@@ -145,7 +140,7 @@ export default {
         this.$refs.audio.play();
       }
 
-      bus.$emit(trackupdate, self.track.id);
+      bus.$emit(dbEvents.trackupdate, self.track.id);
       function createAudio(data){
         let objectURL = URL.createObjectURL(data);
         self.playing = true;
