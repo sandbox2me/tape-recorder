@@ -49,8 +49,8 @@
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
-        <md-menu-item @click.native="saveTrack">Save</md-menu-item>
-        <md-menu-item @click.native="deleteTrack(track.id)">Delete</md-menu-item>
+        <md-menu-item @click="saveTrack">Save</md-menu-item>
+        <md-menu-item @click="deleteTrack(track.id)">Delete</md-menu-item>
       </md-menu-content>
     </md-menu>
   </md-list-item>

@@ -7,7 +7,7 @@
   <div>
     <!-- Title bar -->
     <md-toolbar>
-      <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+      <md-button class="md-icon-button" @click="toggleLeftSidenav">
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title">Tape Recorder</h2>
@@ -32,7 +32,7 @@
     <!-- Undo recording deleted -->
     <md-snackbar md-position="bottom right" ref="snackbar">
       <span>Recording deleted</span>
-      <md-button class="md-primary" @click.native="deleteCancel">Undo</md-button>
+      <md-button class="md-primary" @click="deleteCancel">Undo</md-button>
     </md-snackbar>
 
   </div>
